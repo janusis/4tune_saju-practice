@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+  <head>
+    <title>Fun易-글쓰기</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
+    <script src="./fireinit.js"></script>
+
+    <!-- <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+</style> -->
+  </head>
+
+  <body class="wrap">
+    <br /><br /><br />
+    <div class="container">
+      <div class="text-left">
+        <h2>글쓰기</h2>
+      </div>
+      <br />
+      <hr />
+
+      <!-- 글쓰기 -->
+      <div class="row" style="width:1100px; margin: 0 auto;">
+        <!-- 글제목 입력 -->
+        <div class="form-group">
+          <label for="subject">제목</label>
+          <input type="text" class="form-control" name="subject" id="subject" />
+        </div>
+
+        <!-- 글내용 입력  -->
+        <div class="form-group">
+          <label for="content">내용</label>
+          <textarea
+            class="form-control"
+            rows="20"
+            name="content"
+            id="content"
+          ></textarea>
+        </div>
+
+        <!-- 파일 첨부 -->
+        <!-- <div class="form-group">
+          <label for="File">파일 첨부</label>
+          <input id="File" type="file"  />
+        </div> -->
+        <br />
+
+        <!-- 버튼:저장,돌아가기 -->
+        <div class="center-block" style="width:200px">
+          <input
+            class="btn btn-primary"
+            type="submit"
+            value="저장하기"
+            onclick="SetBoardData();"
+          />
+          <input
+            class="btn btn-primary"
+            type="button"
+            value="돌아가기"
+            function=Set
+            onclick="history.back(1)"
+          /> <!-- "history.back(1)" 왔던곳에서 1만큼 back-->
+        </div>
+      </div>
+      <!--//row-->
+    </div>
+
+    <script>
+
+
+    //  var boardContent = document.getElementById("content")
+      // textarea에서 개행시 'br'태그로 변환
+    //  content = boardContent.replace(/(?:\r\n|\r|\n)/g, "<br />");
+
+      var Index = 0;
+
+        var starCountRef = firebase
+          .database()
+          .ref("Board/")
+          .limitToLast(1)
+          .orderByChild("ID");
+        starCountRef.on("child_added", function(data) {
+          Index = data.val().ID;
+        });
+
+      function SetBoardData() {
+
+        if(confirm("게시글을 등록하시겠습니까?"))
+        {
+        //  console.log("Index: ", Index);
+
+          Index += 1;
+          var BoardTitle = document.getElementById("subject").value;
+          var BoardContent  = document.getElementById("content").value;
+
+      //    console.log("BoardTitle: ", BoardTitle);
+      //          console.log("BoardContent: ", BoardContent);
+
+          firebase
+            .database()
+            .ref("Board/" + Index.toString())
+            .set({
+              Title: BoardTitle,
+              Desc: BoardContent,
+              ID: Index,
+              WriteTime: -1 * new Date().getTime()
+            });
+
+            alert("저장되었습니다");
+
+            history.back(1);
+        }
+
+
+
+      }
+
+
+    </script>
+  </body>
+</html>

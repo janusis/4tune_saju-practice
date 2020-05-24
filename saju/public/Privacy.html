@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fun易-일진일기현황</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
+    <script src="./fireinit.js"></script>
+
+    <!-- <style>
+    @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+    </style> -->
+
+  </head>
+
+  <body class="is-preload">
+    <br /><br /><br />
+    <div class="container">
+      <div class="text-left">
+        <h1><strong>FUN易 개인정보 취급방침</strong></h1>
+      </div>
+      <!-- 헤더 -->
+      <br /><br /><br />
+
+      FUN易 개인정보 취급방침   <br /><br /><br />
+      ‘Goldmoon 주식회사&#39;(이하 &#39;회사&#39;)는 원활하고 편리한 서비스 제공을 위해 이용자의
+      개인정보를 처리하고 있으며 처리되는 이용자의 개인정보는 “개인정보보호법” 등
+      개인정보보호와 관련된 법령을 준수하여 보호하고 있습니다.
+        <br /><br />
+      회사는 본 개인정보처리방침을 공개함으로써 이용자가 언제든지 쉽게 확인할 수 있도록
+      하고 있습니다. 본 개인정보처리방침은 관계 법령 및 지침의 변경이나 회사의 내부 방침
+      변경 등으로 인하여 변경될 수 있으며 변경 시 회사는 변경 이유 및 내용에 대하여 즉시
+      공지합니다. 회사는 이용자의 개인정보를 고지한 범위 내에서 이용하며, 그 범위를
+      초과하거나 변경 시에는 사전에 이용자의 동의를 받습니다.   <br /><br />
+      제 1조 수집하는 개인정보의 항목 및 수집방법 <br />
+      회사는 고객상담, 각종 서비스 제공 등을 위해 아래와 같은 개인정보를 수집하고 있습니다.<br />
+      1. 공통 수집항목 <br />
+      - 앱 이용 및 접속기록, 인증기록, 결제기록, 버전, 단말기 정보(모델명, OS 종류 및 버전,
+      기기식별자등) <br />
+      2. 아래 기재된 서비스를 이용하는 고객에 한하여 아래와 같은 정보들을 수집할 수
+      있습니다. <br />
+      - 고객지원 서비스: 이름, 전화번호, 이메일, 본인확인 시 신분 혹은 관계를 확인할 수 있는
+      증서 <br />
+      ※ 위 서비스의 경우 개인정보 제공을 거부할 수 있으며, 거부할 경우 서비스의 일부 또는
+      전체 이용이 불가능할 수 있습니다.   <br /><br />
+      제 2조. 개인정보의 수집 및 이용목적   <br /><br />
+      회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.   <br /><br />
+      1. 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산, 콘텐츠 제공, 구매 및
+      요금 결제, 물품배송 또는 청구지 등 발송, 본인인증   <br /><br />
+      2. 이용자의 관리   <br /><br />
+      회원제 서비스 이용에 따른 본인확인, 개인식별, 불량회원의 부정 이용방지와 비인가
+      사용방지, 가입의사 확인, 분쟁 조정을 위한 기록보존, 불만처리 등 민원처리, 고지사항
+      전달   <br /><br />
+      3. 마케팅 및 광고에 활용   <br /><br />
+      신규 서비스 개발 및 맞춤 서비스 제공, 통계학적 특성에 따른 서비스 제공 및 광고 게재,
+      서비스의 유효성 확인, 이벤트 및 광고성 정보 제공, 접속빈도 파악, 회원의 서비스이용에
+      대한 통계   <br /><br />
+      제 3조. 개인정보의 보유 및 이용기간   <br /><br />
+      1. 회사는 원칙적으로 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이
+      파기합니다. 단, 다음의 정보에 대해서는 “보존 근거”에서 명시한 근거에 따라 “보존
+      기간”동안 보존합니다.   <br /><br />
+
+      2. 상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의 규정에 의하여 보존할
+      필요가 있는 경우 회사는 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다. 이
+      경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은 아래와 같습니다.
+      ① 대금결제 및 재화 등의 공급에 관한 기록: 5년 (전자상거래등에서의 소비자보호에 관한
+      법률)   <br /><br />
+      ② 소비자의 불만 또는 분쟁처리에 관한 기록: 3년 (전자상거래등에서의 소비자보호에 관한
+      법률)   <br /><br />
+      ③ 계약 또는 청약철회 등에 관한 기록: 5년 (전자상거래등에서의 소비자보호에 관한 법률)   <br /><br />
+      ④ 본인확인에 관한 기록: 6개월 (정보통신 이용촉진 및 정보보호 등에 관한 법률)   <br /><br />
+      ⑤ 전기통신역무를 이용한 사실에 관한 통신 또는 로그에 관한 기록: 3개월
+      (통신비밀보호법)   <br /><br />
+      ⑥ 국세 관련 서류 및 증빙자료 : 5년(국세기본법)  <br /><br />
+      ⑦ 전자금융 거래에 관한 기록 : 5년(전자금융거래법)  <br /><br />
+      제 4조. 개인정보의 파기절차 및 방법  <br /><br />
+      회사는 원칙적으로 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이
+      파기합니다. 파기절차 및 방법은 다음과 같습니다.  <br /><br />
+      1. 파기절차  <br /><br />
+      ① 수집된 정보는 목적이 달성된 후 별도의 DB로 옮겨져(종이의 경우 별도의 서류함) 내부
+      방침 및 기타 관련
+      법령에 의한 정보보호 사유에 따라(보유 및 이용기간 참조)일정 기간 저장된 후 파기됩니다.
+      동 개인정보는 법률에 의한 경우가 아니고서는 보유되는 이외의 다른 목적으로 이용되지
+      않습니다.  <br /><br />
+      2. 파기방법  <br /><br />
+      ① 종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.  <br /><br />
+      ② 전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여
+      삭제합니다.  <br /><br />
+      제 5조. 개인정보의 공유 및 제공  <br /><br />
+      1. 회사는 이용자의 개인정보를 “개인정보의 수집 및 이용목적”에서 고지한 범위 내에서
+      이용하며, 이용자의 사전 동의 없이는 그 범위를 초과하여 이용하거나 외부에 공개하지
+      않습니다. 다만, 아래의 경우에는 주의를 기울여 개인정보를 이용 및 제공할 수 있습니다.
+      ① 회원이 사전에 동의한 경우   <br /><br />
+      ② 법령의 규정에 의거하여 자료 제공이 강제되는 경우 또는 적법한 절차에 의한 법원,
+      수사기관, 기타
+      행정기관의 요청이 있는 경우   <br /><br />
+      ③ 서비스 제공에 따른 요금 정산을 위해 필요한 경우   <br /><br />
+      ④ 게시한 서비스 이용약관이나 기타 회원 서비스 등 이용약관 또는 정책을 위반한 경우
+      제 6조. 회원 및 법정대리인의 권리와 그 행사방법   <br /><br />
+      1. 회원은 언제든지 등록되어 있는 본인의 개인정보를 조회하거나 수정할 수 있으며 가입
+      해지를 요청할 수도 있습니다.   <br /><br />
+      2. 회원의 개인정보 조회·수정을 위해서는 ‘개인정보변경’(또는 ‘회원정보수정’ 등)을 가입
+      해지(동의철회)를 위해서는 “회원탈퇴”를 클릭 하여 본인 확인 절차를 거치신 후 직접 열람,
+      정정 또는 탈퇴가 가능합니다.   <br /><br />
+
+      3. 회원은 본인의 개인정보에 대한 정정 또는 삭제를 요구하는 경우 회사는 본인 여부를
+      확인한 후 지체 없이 필요한 조치를 취합니다.   <br /><br />
+      4. 회사는 고객의 요청에 의해 해지 또는 삭제된 개인정보는 “제3조 (개인정보의 보유 및
+      이용기간)” 에 명시된 바에 따라 처리하고 그 외의 용도로 열람 또는 이용할 수 없도록
+      처리하고 있습니다.   <br /><br />
+      제 7조. 개인정보의 기술적 / 관리적 보호 대책   <br /><br />
+      회사는 고객의 개인정보를 취급함에 있어 개인정보가 분실, 도난, 유출, 변조, 훼손되지
+      않고 안전성을 확보하기 위하여 다음과 같은 기술적 및 관리적 대책을 강구하고 있습니다.
+      회사는 해킹이나 컴퓨터 바이러스 등에 의해 회원의 개인정보가 유출되거나 훼손되는 것을
+      막기 위해 최선을 다하고 있습니다.   <br /><br />
+      개인정보의 훼손에 대비해서 자료를 수시로 백업하고 있고 최신 백신프로그램을 이용하여
+      고객의 개인정보나 자료가 유출되거나 손상되지 않도록 방지하고 있으며, 암호 알고리즘
+      등을 통하여 네트워크상에서 개인정보를 안전하게 전송할 수 있도록 하고 있습니다. 그리고
+      침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고 있으며, 기타
+      시스템적으로 안정성을 확보하기 위한 가능한 모든 기술적 장치를 갖추려 노력하고
+      있습니다.   <br /><br />
+      회사는 고객의 개인정보 관련 취급을 담당자에 한정시키고 있고 이를 위한 별도의
+      비밀번호를 부여하여 정기적으로 갱신하고 있으며, 담당자에 대한 수시 교육을 통하여
+      회사의 개인정보 처리방침의 준수를 항상 강조하고 있습니다. 그리고 주기적으로 회사의
+      개인정보 처리방침의 이행사항 및 담당자의 준수여부를 확인하여 문제가 발견될 경우 즉시
+      수정하고 잡을 수 있도록 노력하고 있습니다.   <br /><br />
+      단, 회원 본인의 부주의나 인터넷상의 문제로 ID와 비밀번호 등 개인정보가 유출해 발생한
+      문제에 대해 회사는 일체의 책임을 지지 않습니다.   <br /><br />
+      제 8조. 개인정보에 관한 민원서비스   <br /><br />
+      회사는 고객의 개인정보를 보호하고 개인정보와 관련한 불만을 처리하기 위하여 아래와
+      같이 개인정보관리책임자를 지정하고 있습니다.   <br /><br />
+
+      제9조. 기타   <br /><br />
+      고객은 회사의 서비스를 이용하시며 발생하는 모든 개인정보보호 관련 민원을
+      개인정보관리책임자 혹은 담당부서로 신고하실 수 있습니다. 회사는 고객의 신고사항에
+      대해 신속하게 충분한 답변을 드릴 것입니다.   <br /><br />
+      기타 개인정보침해에 대한 신고나 상담이 필요하신 경우에는 아래 기관에 문의하시기
+      바랍니다.   <br /><br />
+      1. 전자거래분쟁조정위원회(www.ecmc.or.kr / 1661-5714)   <br /><br />
+      2. 대검찰청 사이버 안전수사단 (www.spo.go.kr / 02-3480-3571)   <br /><br />
+      3. 개인정보 침해신고센터 (www.privacy.kisa.or.kr / 국번없이 118)  <br /><br />
+      4. 경찰청 사이버안전국 (www.ctrc.go.kr / 02-392-0330)  <br /><br />
+      제10조. 고지의 의무  <br /><br />
+      본 개인정보취급방침의 내용추가, 삭제, 수정이 있을 시에는 공지사항을 통하여 고지할
+      것입니다.  <br /><br />
+
+      제11조. LICENSED APPLICATION END USER LICENSE AGREEMENT  <br /><br />
+      Apps made available through the App Store are licensed, not sold, to you.
+      Your license to each App is subject to your prior acceptance of either this
+      Licensed Application End User License Agreement (“Standard EULA”), or a
+      custom end user license agreement between you and the Application Provider
+      (“Custom EULA”), if one is provided. Your license to any Apple App under this
+      Standard EULA or Custom EULA is granted by Apple, and your license to any
+      Third Party App under this Standard EULA or Custom EULA is granted by the
+      Application Provider of that Third Party App. Any App that is subject to this
+      Standard EULA is referred to herein as the “Licensed Application.” The
+      Application Provider or Apple as applicable (“Licensor”) reserves all rights in
+      and to the Licensed Application not expressly granted to you under this
+      Standard EULA.   <br /><br />
+      a. Scope of License: Licensor grants to you a nontransferable license to use
+      the Licensed Application on any Apple-branded products that you own or
+      control and as permitted by the Usage Rules. The terms of this Standard
+      EULA will govern any content, materials, or services accessible from or
+      purchased within the Licensed Application as well as upgrades provided by
+      Licensor that replace or supplement the original Licensed Application, unless
+      such upgrade is accompanied by a Custom EULA. Except as provided in the
+      Usage Rules, you may not distribute or make the Licensed Application
+      available over a network where it could be used by multiple devices at the
+      same time. You may not transfer, redistribute or sublicense the Licensed
+      Application and, if you sell your Apple Device to a third party, you must
+      remove the Licensed Application from the Apple Device before doing so. You
+      may not copy (except as permitted by this license and the Usage Rules),
+      reverse-engineer, disassemble, attempt to derive the source code of, modify,
+      or create derivative works of the Licensed Application, any updates, or any
+      part thereof (except as and only to the extent that any foregoing restriction is
+      prohibited by applicable law or to the extent as may be permitted by the
+      licensing terms governing use of any open-sourced components included with
+      the Licensed Application).  <br /><br />
+      b. Consent to Use of Data: You agree that Licensor may collect and use
+      technical data and related information—including but not limited to technical
+      information about your device, system and application software, and
+      peripherals—that is gathered periodically to facilitate the provision of software
+      updates, product support, and other services to you (if any) related to the
+      Licensed Application. Licensor may use this information, as long as it is in a
+
+      form that does not personally identify you, to improve its products or to provide
+      services or technologies to you.  <br /><br />
+      c. Termination. This Standard EULA is effective until terminated by you or
+      Licensor. Your rights under this Standard EULA will terminate automatically if
+      you fail to comply with any of its terms.  <br /><br />
+      d. External Services. The Licensed Application may enable access to
+      Licensor’s and/or third-party services and websites (collectively and
+      individually, &quot;External Services&quot;). You agree to use the External Services at
+      your sole risk. Licensor is not responsible for examining or evaluating the
+      content or accuracy of any third-party External Services, and shall not be
+      liable for any such third-party External Services. Data displayed by any
+      Licensed Application or External Service, including but not limited to financial,
+      medical and location information, is for general informational purposes only
+      and is not guaranteed by Licensor or its agents. You will not use the External
+      Services in any manner that is inconsistent with the terms of this Standard
+      EULA or that infringes the intellectual property rights of Licensor or any third
+      party. You agree not to use the External Services to harass, abuse, stalk,
+      threaten or defame any person or entity, and that Licensor is not responsible
+      for any such use. External Services may not be available in all languages or in
+      your Home Country, and may not be appropriate or available for use in any
+      particular location. To the extent you choose to use such External Services,
+      you are solely responsible for compliance with any applicable laws. Licensor
+      reserves the right to change, suspend, remove, disable or impose access
+      restrictions or limits on any External Services at any time without notice or
+      liability to you.  <br /><br />
+      e. NO WARRANTY: YOU EXPRESSLY ACKNOWLEDGE AND AGREE
+      THAT USE OF THE LICENSED APPLICATION IS AT YOUR SOLE RISK. TO
+      THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE
+      LICENSED APPLICATION AND ANY SERVICES PERFORMED OR
+      PROVIDED BY THE LICENSED APPLICATION ARE PROVIDED &quot;AS IS&quot;
+      AND “AS AVAILABLE,” WITH ALL FAULTS AND WITHOUT WARRANTY OF
+      ANY KIND, AND LICENSOR HEREBY DISCLAIMS ALL WARRANTIES AND
+      CONDITIONS WITH RESPECT TO THE LICENSED APPLICATION AND
+      ANY SERVICES, EITHER EXPRESS, IMPLIED, OR STATUTORY,
+      INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES AND/OR
+      CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY QUALITY, OF
+      FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET
+      ENJOYMENT, AND OF NONINFRINGEMENT OF THIRD-PARTY RIGHTS.
+
+      NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY LICENSOR
+      OR ITS AUTHORIZED REPRESENTATIVE SHALL CREATE A WARRANTY.
+      SHOULD THE LICENSED APPLICATION OR SERVICES PROVE
+      DEFECTIVE, YOU ASSUME THE ENTIRE COST OF ALL NECESSARY
+      SERVICING, REPAIR, OR CORRECTION. SOME JURISDICTIONS DO NOT
+      ALLOW THE EXCLUSION OF IMPLIED WARRANTIES OR LIMITATIONS
+      ON APPLICABLE STATUTORY RIGHTS OF A CONSUMER, SO THE
+      ABOVE EXCLUSION AND LIMITATIONS MAY NOT APPLY TO YOU.  <br /><br />
+      f. Limitation of Liability. TO THE EXTENT NOT PROHIBITED BY LAW, IN NO
+      EVENT SHALL LICENSOR BE LIABLE FOR PERSONAL INJURY OR ANY
+      INCIDENTAL, SPECIAL, INDIRECT, OR CONSEQUENTIAL DAMAGES
+      WHATSOEVER, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR
+      LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, OR ANY
+      OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING OUT OF OR
+      RELATED TO YOUR USE OF OR INABILITY TO USE THE LICENSED
+      APPLICATION, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF
+      LIABILITY (CONTRACT, TORT, OR OTHERWISE) AND EVEN IF LICENSOR
+      HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. SOME
+      JURISDICTIONS DO NOT ALLOW THE LIMITATION OF LIABILITY FOR
+      PERSONAL INJURY, OR OF INCIDENTAL OR CONSEQUENTIAL
+      DAMAGES, SO THIS LIMITATION MAY NOT APPLY TO YOU. In no event
+      shall Licensor’s total liability to you for all damages (other than as may be
+      required by applicable law in cases involving personal injury) exceed the
+      amount of fifty dollars ($50.00). The foregoing limitations will apply even if the
+      above stated remedy fails of its essential purpose.  <br /><br />
+      g. You may not use or otherwise export or re-export the Licensed Application
+      except as authorized by United States law and the laws of the jurisdiction in
+      which the Licensed Application was obtained. In particular, but without
+      limitation, the Licensed Application may not be exported or re-exported (a) into
+      any U.S.-embargoed countries or (b) to anyone on the U.S. Treasury
+      Department&#39;s Specially Designated Nationals List or the U.S. Department of
+      Commerce Denied Persons List or Entity List. By using the Licensed
+      Application, you represent and warrant that you are not located in any such
+      country or on any such list. You also agree that you will not use these
+      products for any purposes prohibited by United States law, including, without
+      limitation, the development, design, manufacture, or production of nuclear,
+      missile, or chemical or biological weapons.  <br /><br />
+
+      h. The Licensed Application and related documentation are &quot;Commercial
+      Items&quot;, as that term is defined at 48 C.F.R. §2.101, consisting of &quot;Commercial
+      Computer Software&quot; and &quot;Commercial Computer Software Documentation&quot;,
+      as such terms are used in 48 C.F.R. §12.212 or 48 C.F.R. §227.7202, as
+      applicable. Consistent with 48 C.F.R. §12.212 or 48 C.F.R. §227.7202-1
+      through 227.7202-4, as applicable, the Commercial Computer Software and
+      Commercial Computer Software Documentation are being licensed to U.S.
+      Government end users (a) only as Commercial Items and (b) with only those
+      rights as are granted to all other end users pursuant to the terms and
+      conditions herein. Unpublished-rights reserved under the copyright laws of the
+      United States.  <br /><br />
+      i. Except to the extent expressly provided in the following paragraph, this
+      Agreement and the relationship between you and Apple shall be governed by
+      the laws of the State of California, excluding its conflicts of law provisions. You
+      and Apple agree to submit to the personal and exclusive jurisdiction of the
+      courts located within the county of Santa Clara, California, to resolve any
+      dispute or claim arising from this Agreement. If (a) you are not a U.S. citizen;
+      (b) you do not reside in the U.S.; (c) you are not accessing the Service from
+      the U.S.; and (d) you are a citizen of one of the countries identified below, you
+      hereby agree that any dispute or claim arising from this Agreement shall be
+      governed by the applicable law set forth below, without regard to any conflict
+      of law provisions, and you hereby irrevocably submit to the non-exclusive
+      jurisdiction of the courts located in the state, province or country identified
+      below whose law governs:
+      If you are a citizen of any European Union country or Switzerland, Norway or
+      Iceland, the governing law and forum shall be the laws and courts of your
+      usual place of residence.  <br /><br />
+      Specifically excluded from application to this Agreement is that law known as
+      the United Nations Convention on the International Sale of Goods.  <br /><br />
+
+      부칙  <br /><br />
+      본 개인정보취급방침은 2020년 3월 1일부터 시행합니다  <br /><br />
+
+    </div>
+
+  </body>
+</html>

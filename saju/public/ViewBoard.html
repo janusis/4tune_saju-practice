@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+  <head>
+    <title>Fun易</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <!--bootstrap -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./js/bootstrap.js" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
+    <script src="./fireinit.js"></script>
+
+    <!-- <style>
+    @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+    </style> -->
+
+    <style>
+      .empty3 {
+        height: 60px;
+      }
+      .empty2 {
+        height: 40px;
+      }
+      .empty1 {
+        height: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- header & navbar -->
+    <div class="header">
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <a
+            href="index.html"
+            class="navbar-main"
+            style="color: gray; text-decoration: none;"
+          >
+            <h3 style="margin: 10px;">Fun易 관리자 페이지</h3>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="ViewBoard.html">게시판 현황</a></li>
+            <li><a href="UserData.html">사용자 현황</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="empty2"></div>
+
+    <!-- container -->
+    <div class="container">
+      <!-- title -->
+      <div class="title">
+        <h1 style="text-align: center;">Fun易 게시판 관리자</h1>
+        <div class="empty2"></div>
+      </div>
+
+      <!-- search function
+      <div
+        class="search-group form-group"
+        style="width: 400px; margin-bottom: 20px; display: inline-block;"
+      >
+        <div class="search-items" style="display: inline-block;">
+          <select class="form-control" name="searchType" id="searchType">
+            <option value="title">제목</option>
+          </select>
+        </div>
+
+        <div class="search-cont" style="display: inline-block;">
+          <input type="text" class="form-control" name="keyword" id="keyword" />
+        </div>
+
+        <div style="display: inline-block;">
+          <button
+            class="btn"
+            name="btnSearch"
+            id="btnSearch"
+            style="background-color: #e7e7e7; line-height: 1.3;"
+          >
+            검색
+          </button>
+        </div>
+      </div> -->
+
+      <!-- write btn -->
+      <div class="writebtn pull-right" style="display: inline-block;">
+        <a
+          class="btn pull-right"
+          id="btnWrite"
+          href="./WriteReply.html"
+          style="
+            width: 100px;
+            background-color: #e7e7e7;
+            color: #635353;
+            margin-bottom: 15px;
+          "
+          >글쓰기
+        </a>
+      </div>
+
+      <!-- table -->
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody id="BoardData" style="cursor: pointer;"></tbody>
+      </table>
+
+      <!-- Paging -->
+      <div class="pagination-wrapper text-center">
+        <ul id="paging" class="pagination"></ul>
+      </div>
+
+      <!--//container  -->
+    </div>
+
+    <script>
+      // for and forEach are the same!
+      // example:
+      //
+      // var myarray = [ 'abc', 'abcd'];
+      // for (var i = 0; i < myarray.length; i++) {
+      //   myarray[i];
+      // }
+      // myarryay.forEach((item) => {
+      //   item
+      // });
+
+      window.tableRows = [];
+      window.currentPage = 0;
+
+      function clearTable() {
+        const $boardData = $("#BoardData");
+        $boardData.html("");
+      }
+
+      /*
+       * Get always x entries at once, as long as no entries are left
+       */
+      function getBoardData(key) {
+        const databaseRows = firebase
+          .database()
+          .ref("Board/")
+          .orderByKey()
+          .startAt(key || "0")
+          .limitToFirst(50);
+
+        databaseRows
+          .once("value", function (snapshot) {
+            let index = 0;
+            snapshot.forEach((part) => {
+              window.tableRows.push({
+                key: part.key,
+                ...part.val(),
+              });
+
+              if (index === 49) {
+                getBoardData(part.key);
+              }
+
+              index++;
+            });
+            // then - Promises
+            // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise
+          })
+          .then((result) => {
+            generateView(window.currentPage);
+          });
+      }
+
+      function generateView(pageIndex) {
+        generateTableRows(pageIndex);
+        generatePagination(pageIndex);
+      }
+
+      function getTransformedTableRowData(rowData) {
+        const date = new Date(-1 * rowData.WriteTime);
+        const formattedDate = new Intl.DateTimeFormat("ko-KR", {}).format(date);
+
+        return [
+          {
+            data: rowData.ID,
+            clickEvent: (event) => {
+              window.location.href =
+                "ViewReply.html?Index=" + parseInt(String(rowData.ID));
+            },
+          },
+          {
+            data: rowData.Title,
+            clickEvent: (event) => {
+              window.location.href =
+                "ViewReply.html?Index=" + parseInt(String(rowData.ID));
+            },
+          },
+          {
+            data: formattedDate,
+          },
+        ];
+      }
+
+      function generateTableRows(page) {
+        const ROWS_PER_PAGE = 20;
+
+        const $boardData = $("#BoardData");
+        $boardData.html("");
+
+        const boardDataElement = document.getElementById("BoardData");
+        const tableRowsCopy = window.tableRows.slice();
+        const currentTableRows = tableRowsCopy
+          .reverse()
+          .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + 20);
+
+        clearTable();
+
+        currentTableRows.forEach((row) => {
+          const $row = boardDataElement.insertRow(boardDataElement.rows.length);
+
+          const dataCellsData = getTransformedTableRowData(row);
+
+          dataCellsData.forEach((cellData, cellDataIndex) => {
+            const $cell = $row.insertCell(cellDataIndex);
+            $cell.setAttribute("class", `cell100 column${cellDataIndex + 1}`);
+            $cell.innerHTML = cellData.data;
+
+            if (cellData.clickEvent) {
+              $cell.addEventListener("click", cellData.clickEvent);
+            }
+          });
+        });
+      }
+
+      function generatePagination(page) {
+        const ROWS_PER_PAGE = 20;
+        const pageCount = Math.ceil(window.tableRows.length / 20);
+
+        $("#paging").empty();
+
+        generatePaginationBackArrow(page);
+        generatePaginationNumberation(page, pageCount);
+        generatePaginationNextArrow(page, pageCount);
+      }
+
+      function generatePaginationBackArrow(page) {
+        const leftArrowLinkIndex = page === 0 ? 0 : page - 1;
+
+        if (page !== 0) {
+          let a = $("<a/>")
+            .on("click", function () {
+              window.currentPage = leftArrowLinkIndex;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text("<");
+          const prev = $("<li/>").addClass("page-item").append(a);
+          $("#paging").append(prev.append(a));
+        }
+      }
+
+      function generatePaginationNumberation(page, pageCount) {
+        const pageRange = [];
+        pageRange[0] = page - 2 < 0 ? 0 : page - 2;
+        pageRange[1] =
+          pageRange[0] + 5 > pageCount ? pageCount : pageRange[0] + 5;
+        for (let i = pageRange[0]; i < pageRange[1]; i++) {
+          const li = $("<li/>")
+            .addClass("page-item")
+            .addClass(page === i ? "active" : null);
+          const atag = $("<a/>")
+            .on("click", function () {
+              window.currentPage = i;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text(i + 1);
+          li.append(atag);
+          $("#paging").append(li);
+        }
+      }
+
+      function generatePaginationNextArrow(page, pageCount) {
+        const lastPageIndex = pageCount - 1;
+        const rightArrowIndex =
+          page === lastPageIndex ? lastPageIndex : page + 1;
+
+        if (page !== lastPageIndex) {
+          const next = $("<li/>").addClass("page-item");
+          a = $("<a/>")
+            .on("click", function () {
+              window.currentPage = rightArrowIndex;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text(">");
+          $("#paging").append(next.append(a));
+        }
+      }
+
+      // Trigger Initial
+      $(function () {
+        getBoardData("1");
+      });
+    </script>
+  </body>
+</html>

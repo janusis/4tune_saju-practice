@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+  <head>
+    <title>Fun易</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <!--bootstrap -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/loadingindicator.css" />
+
+    <link rel="stylesheet" href="./js/bootstrap.js" />
+    <link rel="stylesheet" href="./css/loadingindicator.css" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
+    <script src="./fireinit.js"></script>
+
+    <!-- <style>
+    @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+    </style> -->
+    <style>
+      .empty3 {
+        height: 60px;
+      }
+      .empty2 {
+        height: 40px;
+      }
+      .empty1 {
+        height: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- header & navbar -->
+    <div class="header">
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <a
+            href="index.html"
+            class="navbar-main"
+            style="color: gray; text-decoration: none;"
+          >
+            <h3 style="margin: 10px;">Fun易 관리자 페이지</h3>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="ViewBoard.html">게시판 현황</a></li>
+            <li><a href="UserData.html">사용자 현황</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="empty2"></div>
+
+    <!-- container -->
+    <div class="container">
+      <!-- title -->
+      <div class="title">
+        <h1 style="text-align: center;">Fun易 사용자 현황</h1>
+        <div class="empty2"></div>
+      </div>
+
+
+      <div
+        class="search-group form-group"
+        style="width: 400px; margin-bottom: 20px;"
+      >
+        <div class="search-items" style="display: inline-block;">
+          <select class="form-control" name="searchType" id="searchType">
+            <option value="title">아이디</option>
+          <!--  <option value="Content">구독상태</option> -->
+          </select>
+        </div>
+
+        <div class="search-cont" style="display: inline-block;">
+          <input type="text" class="form-control" name="keyword" id="keyword" />
+        </div>
+
+        <div style="display: inline-block;">
+          <button
+            class="btn"
+            name="btnSearch"
+            id="btnSearch"
+            style="background-color: #e7e7e7;"
+            onclick="SearchUser()"
+          >
+            검색
+          </button>
+        </div>
+      </div>
+
+      <!-- table -->
+
+      <table class="table table-striped table-hover" style="cursor: pointer;">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>아이디</th>
+            <th>명단</th>
+            <th>일진일기</th>
+            <th>구독 상태</th>
+          </tr>
+        </thead>
+        <tbody id="BoardData"></tbody>
+      </table>
+      <div class="empty1"></div>
+
+      <!-- Paging -->
+      <div
+        class="pagination-wrapper text-center"
+        style="display: flex; align-items: center; justify-content: center;"
+      >
+        <ul id="paging" class="pagination"></ul>
+        <div
+          id="loading-outer-wrap"
+          style="display: none; align-items: center;"
+          class="loading-outer-wrap"
+        >
+          <div id="loading-wrapper" style="margin-left: 30px;">
+            <div
+              class="loader02"
+              style="width: 35px; height: 35px; margin: 0;"
+            ></div>
+          </div>
+          <div style="margin-left: 10px; color: grey;">
+            데이터를 가져오는 중입니다.
+          </div>
+        </div>
+      </div>
+
+      <!--//container -->
+    </div>
+
+    <script>
+      function isEmpty(str) {
+        if (typeof str == "undefined" || str == null || str == "") return true;
+        else return false;
+      }
+
+      function SearchUser()
+      {
+        var name = document.getElementById("keyword").value
+        firebase.database().ref('UserData_Auth/' + name).once('value').then(function(snapshot) {
+            console.log(snapshot.val(), 'key: ', snapshot.key)
+            if(!isEmpty(snapshot.val()))
+            {
+              if (!isEmpty(snapshot.val().Index)) {
+                var objKeyArr = snapshot.val().Index;
+                  console.log(snapshot.val(), 'key: ', snapshot.val().Index);
+                window.location.href = "SearchUserData.html?Index=" + parseInt(String(snapshot.val().Index));
+              }
+            }
+
+            });
+      }
+
+      window.tableRows = [];
+      window.currentPage = 0;
+
+      function clearTable() {
+        const $boardData = $("#BoardData");
+        $boardData.html("");
+      }
+
+      function addSpinner() {
+        const $boardData = $("#loading-outer-wrap");
+        $boardData.css("display", "flex");
+      }
+
+      function removeSpinner() {
+        const $boardData = $("#loading-outer-wrap");
+        $boardData.css("display", "none");
+      }
+
+      /*
+       * Get always x entries at once, as long as no entries are left
+       */
+      function getBoardData(key) {
+        const databaseRows = firebase
+          .database()
+          .ref("UserData/")
+          .orderByKey()
+          .startAt(key || "0")
+          .limitToFirst(50);
+
+        addSpinner();
+
+        let index = 0;
+
+        databaseRows
+          .once("value", function (snapshot) {
+            snapshot.forEach((part) => {
+              window.tableRows.push({
+                key: part.key,
+                ...part.val(),
+              });
+
+              if (index === 49) {
+                getBoardData(part.key);
+              }
+
+              index++;
+            });
+          })
+          .then((result) => {
+            // As soon as results are not 50 items, remove spinner
+            if (index !== 50) {
+              removeSpinner();
+            } else {
+              addSpinner();
+            }
+            generateView(window.currentPage);
+          });
+      }
+
+      function generateView(pageIndex) {
+        generateTableRows(pageIndex);
+        generatePagination(pageIndex);
+      }
+
+      function getCustomerDataCell(data) {
+        let customerData = {
+          data: 0,
+        };
+
+        if (!isEmpty(data.CustomerData)) {
+          customerData.data = Object.keys(data.CustomerData).length;
+          customerData.clickEvent = function (event) {
+            window.location.href =
+              "SaveUserData.html?Index=" + parseInt(String(data.key));
+          };
+        }
+
+        return customerData;
+      }
+
+      function getDiaryDataCell(data) {
+        let diaryData = {
+          data: 0,
+        };
+
+        if (!isEmpty(data.DiaryData)) {
+          diaryData.data = Object.keys(data.DiaryData).length;
+          diaryData.clickEvent = function (event) {
+            window.location.href =
+              "DiaryData.html?Index=" + parseInt(String(data.key));
+          };
+
+        }
+
+        return diaryData;
+      }
+
+      function getVIPDataCell(data) {
+        let vipData = {
+          data: null,
+        };
+
+        if (isEmpty(data.vip)) {
+          vipData.data = "일반";
+        } else {
+          if (data.vip === 1) {
+            vipData.data = "vip";
+          } else if (data.vip === 2) {
+            vipData.data = "vvip";
+          }
+        }
+
+        return vipData;
+      }
+
+      function getTransformedTableRowData(rowData) {
+        return [
+          {
+            data: rowData.key,
+          },
+          {
+            data: isEmpty(rowData.LoginID) ? "아이디없음" : rowData.LoginID,
+            clickEvent: null,
+          },
+          getCustomerDataCell(rowData),
+          getDiaryDataCell(rowData),
+          getVIPDataCell(rowData),
+        ];
+      }
+
+      function generateTableRows(page) {
+        const ROWS_PER_PAGE = 20;
+
+        const boardDataElement = document.getElementById("BoardData");
+        const tableRowsCopy = window.tableRows.slice();
+        const currentTableRows = tableRowsCopy.slice(
+          page * ROWS_PER_PAGE,
+          page * ROWS_PER_PAGE + 20
+        );
+
+        clearTable();
+
+        currentTableRows.forEach((row) => {
+          const $row = boardDataElement.insertRow(boardDataElement.rows.length);
+
+          const dataCellsData = getTransformedTableRowData(row);
+
+          dataCellsData.forEach((cellData, cellDataIndex) => {
+            const $cell = $row.insertCell(cellDataIndex);
+            $cell.setAttribute("class", `cell100 column${cellDataIndex + 1}`);
+            $cell.innerHTML = cellData.data;
+
+            if (cellData.clickEvent) {
+              $cell.addEventListener("click", cellData.clickEvent);
+            }
+          });
+        });
+      }
+
+      function generatePagination(page) {
+        const ROWS_PER_PAGE = 20;
+        const pageCount = Math.ceil(window.tableRows.length / 20);
+
+        $("#paging").empty();
+
+        generatePaginationBackArrow(page);
+        generatePaginationNumberation(page, pageCount);
+        generatePaginationNextArrow(page, pageCount);
+      }
+
+      function generatePaginationBackArrow(page) {
+        const leftArrowLinkIndex = page === 0 ? 0 : page - 1;
+
+        if (page !== 0) {
+          let a = $("<a/>")
+            .on("click", function () {
+              window.currentPage = leftArrowLinkIndex;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text("<");
+          const prev = $("<li/>").addClass("page-item").append(a);
+          $("#paging").append(prev.append(a));
+        }
+      }
+
+      function generatePaginationNumberation(page, pageCount) {
+        const pageRange = [];
+        pageRange[0] = page - 2 < 0 ? 0 : page - 2;
+        pageRange[1] =
+          pageRange[0] + 5 > pageCount ? pageCount : pageRange[0] + 5;
+        for (let i = pageRange[0]; i < pageRange[1]; i++) {
+          const li = $("<li/>")
+            .addClass("page-item")
+            .addClass(page === i ? "active" : null);
+          const atag = $("<a/>")
+            .on("click", function () {
+              window.currentPage = i;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text(i + 1);
+          li.append(atag);
+          $("#paging").append(li);
+        }
+      }
+
+      function generatePaginationNextArrow(page, pageCount) {
+        const lastPageIndex = pageCount - 1;
+        const rightArrowIndex =
+          page === lastPageIndex ? lastPageIndex : page + 1;
+
+        if (page !== lastPageIndex) {
+          const next = $("<li/>").addClass("page-item");
+          a = $("<a/>")
+            .on("click", function () {
+              window.currentPage = rightArrowIndex;
+              generateView(window.currentPage);
+            })
+            .addClass("page-link")
+            .attr("href", "#")
+            .text(">");
+          $("#paging").append(next.append(a));
+        }
+      }
+
+      // Trigger Initial
+      $(function(){
+        getBoardData("1");
+      });
+    </script>
+  </body>
+</html>
